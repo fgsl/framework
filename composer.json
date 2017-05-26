@@ -1,0 +1,13 @@
+{
+    "name": "fgsl/framework",
+    "description": "FGSL Framework",
+    "license": "AGPL",
+    "keywords": [
+        "application",
+        "framework"
+    ],
+    "homepage": "https://github.com/fgsl/framework",
+    "require": {
+        "php": ">=7"
+    },
+}
