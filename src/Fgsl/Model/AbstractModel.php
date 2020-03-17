@@ -1,7 +1,25 @@
 <?php
+/**
+ *  FGSL Framework
+ *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
+ *  @copyright FGSL 2020
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ 
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 namespace Fgsl\Model;
 
-use Zend\Db\RowGateway\RowGateway;
+use Laminas\Db\RowGateway\RowGateway;
+use Laminas\InputFilter\InputFilterInterface;
 
 abstract class AbstractModel extends RowGateway
 {
@@ -13,7 +31,7 @@ abstract class AbstractModel extends RowGateway
 
     /**
      *
-     * @return \Zend\InputFilter\InputFilterInterface
+     * @return \Laminas\InputFilter\InputFilterInterface
      */
     abstract public function getInputFilter();
 
@@ -22,10 +40,8 @@ abstract class AbstractModel extends RowGateway
      * @return array
      */
     public function getArrayCopy()
-    {
-        $attributes = get_object_vars($this);
-        unset($attributes['inputFilter']);
-        return $attributes;
+    {        
+        return $this->data;
     }
 
     public function populate(array $rowData, $rowExistsInDatabase = false)

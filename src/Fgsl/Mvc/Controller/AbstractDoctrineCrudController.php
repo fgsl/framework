@@ -1,12 +1,29 @@
 <?php
+/**
+ *  FGSL Framework
+ *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
+ *  @copyright FGSL 2020
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ 
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 namespace Fgsl\Mvc\Controller;
 
-use Zend\Paginator\Paginator;
+use Laminas\Paginator\Paginator;
 use Fgsl\Db\DoctrineManager\DoctrineManager;
 use Fgsl\Db\Entity\AbstractEntity;
 use Fgsl\Form\AbstractForm;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Zend\Session\Storage\SessionArrayStorage;
+use Laminas\Paginator\Adapter\ArrayAdapter;
+use Laminas\Session\Storage\SessionArrayStorage;
 
 abstract class AbstractDoctrineCrudController extends AbstractCrudController
 {
@@ -17,7 +34,7 @@ abstract class AbstractDoctrineCrudController extends AbstractCrudController
     
     /**
      *
-     * @return \Zend\Paginator\Paginator
+     * @return \Laminas\Paginator\Paginator
      */
     protected function getPaginator()
     {
@@ -32,8 +49,8 @@ abstract class AbstractDoctrineCrudController extends AbstractCrudController
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Fgsl\Controller\AbstractCrudController::getModel()
+     * @param string $key
+     * @return object
      */
     protected function getModel($key)
     {
@@ -110,10 +127,10 @@ abstract class AbstractDoctrineCrudController extends AbstractCrudController
     public function saveModel($model, $form)
     {
         $key = $model->getKeyValue();
-        // preenche um objeto transiente
+        // fill the transient object
         $model->exchangeArray($form->getData());
         $key = $model->getKeyValue();
-        // obtém o objeto persistente
+        // get the persistent object
         $model = $this->getModel($key);
         $model->exchangeArray($form->getData());
         $em = DoctrineManager::getEntityManager();
@@ -137,7 +154,7 @@ abstract class AbstractDoctrineCrudController extends AbstractCrudController
 
     /**
      *
-     * @return \Object
+     * @return object
      */
     protected function getObject($namespace)
     {

@@ -1,18 +1,35 @@
 <?php
+/**
+ *  FGSL Framework
+ *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
+ *  @copyright FGSL 2020
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ 
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 namespace Fgsl\Mvc\Controller;
 
 use Fgsl\Db\TableGateway\AbstractTableGateway;
-use Zend\Form\Form;
-use Zend\Paginator\Adapter\DbSelect;
-use Zend\Paginator\Paginator;
-use Zend\View\Model\ViewModel;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Mvc\I18n\Translator as MvcTranslator;
-use Zend\Session\Storage\SessionArrayStorage;
-use Zend\I18n\Translator\Resources;
-use Zend\I18n\Translator\Translator;
-use Zend\Validator\AbstractValidator;
-use Zend\Db\ResultSet\ResultSet;
+use Laminas\Form\Form;
+use Laminas\Paginator\Adapter\DbSelect;
+use Laminas\Paginator\Paginator;
+use Laminas\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
+use Laminas\Session\Storage\SessionArrayStorage;
+use Laminas\I18n\Translator\Resources;
+use Laminas\I18n\Translator\Translator;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Db\ResultSet\ResultSet;
 
 abstract class AbstractCrudController extends AbstractActionController
 {
@@ -96,7 +113,7 @@ abstract class AbstractCrudController extends AbstractActionController
 
     /**
      *
-     * @return \Zend\Paginator\Paginator
+     * @return \Laminas\Paginator\Paginator
      */
     protected function getPaginator()
     {
@@ -202,7 +219,7 @@ abstract class AbstractCrudController extends AbstractActionController
 
     /**
      *
-     * @return \Object
+     * @return object
      */
     protected function getObject($namespace)
     {

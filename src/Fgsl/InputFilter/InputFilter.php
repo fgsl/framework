@@ -1,14 +1,31 @@
 <?php
+/**
+ *  FGSL Framework
+ *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
+ *  @copyright FGSL 2020
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ 
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 namespace Fgsl\InputFilter;
 
-use Zend\Filter\FilterChain;
-use Zend\Filter\FilterInterface;
-use Zend\InputFilter\Input;
-use Zend\InputFilter\InputFilter as ZendInputFilter;
-use Zend\Validator\ValidatorChain;
-use Zend\Validator\ValidatorInterface;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\FilterInterface;
+use Laminas\InputFilter\Input;
+use Laminas\InputFilter\InputFilter as LaminasInputFilter;
+use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorInterface;
 
-class InputFilter extends ZendInputFilter
+class InputFilter extends LaminasInputFilter
 {
     /**
      *
@@ -70,7 +87,7 @@ class InputFilter extends ZendInputFilter
      */
     public function addChains()
     {
-        foreach ($this->inputs as $name) {
+        foreach ($this->inputs as $name => $input) {
             $this->inputs[$name]->setFilterChain($this->filters[$name]);
             $this->inputs[$name]->setValidatorChain($this->validators[$name]);
         }
