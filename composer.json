@@ -31,7 +31,7 @@
 		"laminas/laminas-mvc-plugin-flashmessenger" : "1.0.*",
 		"laminas/laminas-navigation" : "2.8.*",
 		"laminas/laminas-paginator" : "2.7.*",
-		"laminas/laminas-session" : "2.7.*",
+		"laminas/laminas-session" : "2.9.*",
 		"phpunit/phpunit" : "^8.5"
 	},
 	"config" : {
