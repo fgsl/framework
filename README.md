@@ -36,3 +36,7 @@ This component allows to integrante Doctrine as ORM manager of application
 ## ServiceManager
 
 *  Fgsl\ServiceManager\ServiceManager
+
+## View
+
+* Fgsl\View\JSHelper
