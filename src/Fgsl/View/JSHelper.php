@@ -33,18 +33,18 @@ class JSHelper
      * @param array $paths
      * @param boolean $constants
      */
-    public static function loadJS(RendererInterface $view, string $path = null, array $paths = null,$constants = true)
+    public static function loadJS(RendererInterface $view, string $path = null, array $paths = null,$constants = true, $type = 'text/javascript')
     {
         if ($constants){
-            $view->headScript(HeadScript::SCRIPT)->appendScript($script);
+            $view->headScript(HeadScript::SCRIPT)->appendScript($script, $type);
         }
         if ($paths == null){
             $script = file_get_contents($path);
-            $view->headScript(HeadScript::SCRIPT)->appendScript($script);
+            $view->headScript(HeadScript::SCRIPT)->appendScript($script, $type);
         } else {
             foreach($paths as $path){
                 $script = file_get_contents($path);
-                $view->headScript(HeadScript::SCRIPT)->appendScript($script);
+                $view->headScript(HeadScript::SCRIPT)->appendScript($script, $type);
             }
         }
     }
@@ -53,35 +53,35 @@ class JSHelper
      * @param RendererInterface $view
      * @param string $path
      */
-    public static function appendJS(RendererInterface $view, string $path)
+    public static function appendJS(RendererInterface $view, string $path, $type = 'text/javascript')
     {
-        $view->headScript(HeadScript::FILE)->appendFile($path);
+        $view->headScript(HeadScript::FILE)->appendFile($path, $type);
     }
     
     /**
      * @param RendererInterface $view
      * @param string $path
      */
-    public static function prependJS(RendererInterface $view, string $path)
+    public static function prependJS(RendererInterface $view, string $path, $type = 'text/javascript')
     {
-        $view->headScript(HeadScript::FILE)->prependFile($path);
+        $view->headScript(HeadScript::FILE)->prependFile($path, $type);
     }
     
     /**
      * @param RendererInterface $view
      * @param string $script
      */
-    public static function appendScript(RendererInterface $view, string $script)
+    public static function appendScript(RendererInterface $view, string $script, $type = 'text/javascript')
     {
-        $view->headScript(HeadScript::SCRIPT)->appendScript($script);
+        $view->headScript(HeadScript::SCRIPT)->appendScript($script, $type);
     }
     
     /**
      * @param RendererInterface $view
      * @param string $script
      */
-    public static function prependScript(RendererInterface $view, string $script)
+    public static function prependScript(RendererInterface $view, string $script, $type = 'text/javascript')
     {
-        $view->headScript(HeadScript::SCRIPT)->prependScript($script);
+        $view->headScript(HeadScript::SCRIPT)->prependScript($script, $type);
     }
 }
