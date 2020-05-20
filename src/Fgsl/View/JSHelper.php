@@ -36,7 +36,7 @@ class JSHelper
     public static function loadJS(RendererInterface $view, string $path = null, array $paths = null,$constants = true, $type = 'text/javascript')
     {
         if ($constants){
-            $view->headScript(HeadScript::SCRIPT)->appendScript($script, $type);
+            $view->headScript(HeadScript::SCRIPT)->appendScript(self::$script, $type);
         }
         if ($paths == null){
             $script = file_get_contents($path);
