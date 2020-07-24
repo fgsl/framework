@@ -75,13 +75,13 @@ abstract class AbstractCrudController extends AbstractActionController
      */
     protected $title;
 
-    public function __construct($table, $parentTable, $sessionManager = null)
+    public function __construct($table, $parentTable = null, $sessionManager = null)
     {
         $this->table = $table;
-	$this->parentTable = $parentTable;
-	if ($sessionManager != null) {
+        $this->parentTable = $parentTable;
+        if ($sessionManager != null) {
             $sessionManager->start();
-	}
+        }
     }
 
     /**
