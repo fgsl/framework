@@ -74,7 +74,7 @@ abstract class AbstractTableGateway
         $models = $this->getModels([
             $this->keyName => $key
         ]);
-        if ($models->count() == 0){
+        if ($models->count() == 0 || $models->current() == null ){
             $model = $this->modelName;
             return new $model(
                 $this->keyName,
