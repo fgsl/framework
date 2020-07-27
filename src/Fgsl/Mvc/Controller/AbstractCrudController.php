@@ -102,7 +102,8 @@ abstract class AbstractCrudController extends AbstractActionController
         ]);
 
         $calledClass = get_called_class();
-        $controller = strtolower(end(explode('\\',str_replace('Controller','',$calledClass))));
+        $tokens = explode('\\',str_replace('Controller','',$calledClass));
+        $controller = strtolower(end($tokens));
         return new ViewModel([
             'controller' => $controller,
             'paginator' => $this->getPaginator(),
@@ -237,7 +238,8 @@ abstract class AbstractCrudController extends AbstractActionController
      */
     protected function getControllerName()
     {
-        $controller = end(explode('\\',str_replace('Controller','',get_called_class())));
+        $tokens = explode('\\',str_replace('Controller','',get_called_class()));
+        $controller = end($tokens);
         return lcfirst($controller);
     }
 }
