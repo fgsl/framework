@@ -24,6 +24,11 @@ use Laminas\Form\Form;
 abstract class AbstractForm extends Form
 {
     /**
+     * @var string
+     */
+    const CHECKBOX = 'checkbox';
+    
+    /**
      *
      * @var string
      */
@@ -38,6 +43,12 @@ abstract class AbstractForm extends Form
      * @var string
      */
     const PASSWORD = 'password';
+        
+    /**
+     * @var string
+     */
+    const RADIO = 'radio';
+    
     /**
      *
      * @var string
