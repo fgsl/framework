@@ -30,6 +30,7 @@ use Laminas\I18n\Translator\Resources;
 use Laminas\I18n\Translator\Translator;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Db\ResultSet\ResultSet;
+use Fgsl\Model\AbstractModel;
 
 abstract class AbstractCrudController extends AbstractActionController
 {
@@ -74,6 +75,11 @@ abstract class AbstractCrudController extends AbstractActionController
      * @var string
      */
     protected $title;
+    
+    /**
+     * @var boolean
+     */
+    protected $activeRecordStrategy = false;
 
     public function __construct($table, $parentTable = null, $sessionManager = null)
     {
@@ -188,7 +194,12 @@ abstract class AbstractCrudController extends AbstractActionController
                 ]);
             }
             $model->populate($form->getData());
-            $model->save();
+            if ($this->activeRecordStrategy){
+                $model->save();
+            } else {
+                $this->table->save($model);
+            }
+            
         }
         return $this->redirect()->toRoute($this->route, [
             'controller' => $this->getControllerName()
@@ -222,7 +233,7 @@ abstract class AbstractCrudController extends AbstractActionController
 
     /**
      *
-     * @return object
+     * @return AbstractModel
      */
     protected function getObject($namespace)
     {
