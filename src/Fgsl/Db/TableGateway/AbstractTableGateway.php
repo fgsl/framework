@@ -93,7 +93,8 @@ abstract class AbstractTableGateway
         $primaryKey = $this->keyName;
         $key = $model->$primaryKey;
         $set = $model->getArrayCopy();
-        if (! $this->getModel($key)->$primaryKey) {
+        $existingModel = $this->getModel($key);
+        if (!isset($existingModel->$primaryKey)) {
             $this->tableGateway->insert($set);
         } else {
             $this->tableGateway->update($set, array(
