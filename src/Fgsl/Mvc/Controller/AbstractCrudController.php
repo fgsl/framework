@@ -145,14 +145,18 @@ abstract class AbstractCrudController extends AbstractActionController
         $model = $this->table->getModel($key);
         $form = $this->getForm(TRUE);
         $sessionStorage = new SessionArrayStorage();
+        $saved = false;
         if (isset($sessionStorage->model)) {
             $model->exchangeArray($sessionStorage->model->toArray());
             unset($sessionStorage->model);
             $form->setInputFilter($model->getInputFilter());
+            $saved = true;
         }
         $form->bind($model);
         $this->initValidatorTranslator();
-        $form->isValid();
+        if ($saved) {
+            $form->isValid();
+        }
         return [
             'form' => $form,
             'title' => $this->getEditTitle($key)

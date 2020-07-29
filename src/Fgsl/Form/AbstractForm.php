@@ -67,6 +67,13 @@ abstract class AbstractForm extends Form
      * @var string
      */
     const TEXT = 'text';
+    
+    /**
+     *
+     * @var string
+     */
+    const TEXTAREA = 'textarea';    
+    
     /**
      *
      * @param string $name
