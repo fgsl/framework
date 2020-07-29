@@ -20,6 +20,7 @@ namespace Fgsl\Form;
 
 use Laminas\Form\Element\Select;
 use Laminas\Form\Form;
+use Laminas\Form\Element\Checkbox;
 
 abstract class AbstractForm extends Form
 {
@@ -80,6 +81,16 @@ abstract class AbstractForm extends Form
             $element->setLabel($label)
                 ->setAttributes($attributes)
                 ->setOptions($options);
+        } elseif ($type == self::CHECKBOX) {
+            $element = new CheckBox($name);
+            $element->setLabel($label)
+            ->setAttributes($attributes)
+            ->setOptions($options);
+        } elseif ($type == self::RADIO) {
+            $element = new Radio($name);
+            $element->setLabel($label)
+            ->setAttributes($attributes)
+            ->setOptions($options);            
         } else {
             $attributes['type'] = $type;
 
