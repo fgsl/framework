@@ -21,6 +21,7 @@ namespace Fgsl\Form;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Form;
 use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Radio;
 
 abstract class AbstractForm extends Form
 {

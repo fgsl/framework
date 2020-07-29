@@ -48,11 +48,14 @@ class InputFilter extends LaminasInputFilter
     /**
      *
      * @param string $name
+     * @param boolean $required (optional)
      * @return InputFilter
      */
-    public function addInput($name)
+    public function addInput($name, $required = true)
     {
-        $this->inputs[$name] = new Input($name);
+        $input = new Input($name);
+        $input->setRequired($required);
+        $this->inputs[$name] = $input;
         return $this;
     }
 
