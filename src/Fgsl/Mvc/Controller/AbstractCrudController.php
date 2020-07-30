@@ -232,7 +232,7 @@ abstract class AbstractCrudController extends AbstractActionController
      */
     public function pageAction()
     {
-        return $this->forward()->dispatch($this->getControllerName(),[$this->pageArg => $this->params('key')]);
+        return $this->redirect()->toRoute($this->route,[$this->pageArg => $this->params('key')]);
     }
 
     protected function initValidatorTranslator()
