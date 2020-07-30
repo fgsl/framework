@@ -19,18 +19,18 @@
 namespace Fgsl\Mvc\Controller;
 
 use Fgsl\Db\TableGateway\AbstractTableGateway;
+use Fgsl\Model\AbstractModel;
+use Laminas\Db\ResultSet\ResultSet;
 use Laminas\Form\Form;
-use Laminas\Paginator\Adapter\DbSelect;
-use Laminas\Paginator\Paginator;
-use Laminas\View\Model\ViewModel;
-use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\Mvc\I18n\Translator as MvcTranslator;
-use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\I18n\Translator\Resources;
 use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
+use Laminas\Paginator\Paginator;
+use Laminas\Paginator\Adapter\DbSelect;
+use Laminas\Session\Container;
 use Laminas\Validator\AbstractValidator;
-use Laminas\Db\ResultSet\ResultSet;
-use Fgsl\Model\AbstractModel;
+use Laminas\View\Model\ViewModel;
 
 abstract class AbstractCrudController extends AbstractActionController
 {
@@ -149,11 +149,11 @@ abstract class AbstractCrudController extends AbstractActionController
         $key = $this->params()->fromRoute('key', null);
         $model = $this->table->getModel($key);
         $form = $this->getForm(TRUE);
-        $sessionStorage = new SessionArrayStorage();
+        $sessionContainer = new Container();
         $saved = false;
-        if (isset($sessionStorage->model)) {
-            $model->exchangeArray($sessionStorage->model->toArray());
-            unset($sessionStorage->model);
+        if (isset($sessionContainer->model)) {
+            $model->exchangeArray($sessionContainer->model->toArray());
+            unset($sessionContainer->model);
             $form->setInputFilter($model->getInputFilter());
             $saved = true;
         }
@@ -194,8 +194,8 @@ abstract class AbstractCrudController extends AbstractActionController
             $post = $request->getPost();
             $form->setData($post);
             if (! $form->isValid()) {
-                $sessionStorage = new SessionArrayStorage();
-                $sessionStorage->model = $post;
+                $sessionContainer = new Container();
+                $sessionContainer->model = $post;
                 return $this->redirect()->toRoute($this->route, [
                     'action' => 'edit',
                     'controller' => $this->getEvent()
