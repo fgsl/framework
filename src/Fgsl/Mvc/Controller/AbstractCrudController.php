@@ -191,7 +191,7 @@ abstract class AbstractCrudController extends AbstractActionController
             $form = $this->getForm();
             $model = $this->getObject($this->modelClass);
             $form->setInputFilter($model->getInputFilter());
-            $post = $request->getPost();
+            $post = $this->getPost();
             $form->setData($post);
             if (! $form->isValid()) {
                 $sessionContainer = new Container();
@@ -269,5 +269,13 @@ abstract class AbstractCrudController extends AbstractActionController
         $tokens = explode('\\',str_replace('Controller','',get_called_class()));
         $controller = end($tokens);
         return lcfirst($controller);
+    }
+    
+    /**
+     * @return array
+     */
+    protected function getPost()
+    {
+        return $this->getRequest()->getPost();
     }
 }
