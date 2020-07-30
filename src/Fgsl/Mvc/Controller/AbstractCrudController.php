@@ -221,6 +221,14 @@ abstract class AbstractCrudController extends AbstractActionController
             'controller' => $this->getControllerName()
         ]);
     }
+    
+    /**
+     * Action to pagination
+     */
+    public function pageAction()
+    {
+        return $this->forward()->dispatch($this->getControllerName(),['page' => $this->params('key')]);
+    }
 
     protected function initValidatorTranslator()
     {
