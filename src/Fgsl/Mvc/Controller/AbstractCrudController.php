@@ -80,6 +80,11 @@ abstract class AbstractCrudController extends AbstractActionController
      * @var boolean
      */
     protected $activeRecordStrategy = false;
+    
+    /**
+     * @var string
+     */
+    protected $pageArg = 'page';
 
     public function __construct($table, $parentTable = null, $sessionManager = null)
     {
@@ -131,7 +136,7 @@ abstract class AbstractCrudController extends AbstractActionController
         $pageAdapter = new DbSelect($this->table->getSelect(), $this->table->getSql(),$resultSet);
         $paginator = new Paginator($pageAdapter);
         $paginator->setCurrentPageNumber($this->params()
-            ->fromRoute('page', 1));
+            ->fromRoute($this->pageArg, 1));
         $paginator->setItemCountPerPage($this->itemCountPerPage);
         return $paginator;
     }
@@ -227,7 +232,7 @@ abstract class AbstractCrudController extends AbstractActionController
      */
     public function pageAction()
     {
-        return $this->forward()->dispatch($this->getControllerName(),['page' => $this->params('key')]);
+        return $this->forward()->dispatch($this->getControllerName(),[$this->pageArg => $this->params('key')]);
     }
 
     protected function initValidatorTranslator()
