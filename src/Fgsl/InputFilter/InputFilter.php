@@ -90,11 +90,12 @@ class InputFilter extends LaminasInputFilter
      */
     public function addChains()
     {
-        foreach ($this->inputs as $name => $input) {
+        foreach ($this->inputs as $name => $input) {            
             $this->filters[$name] = isset($this->filters[$name]) ? $this->filters[$name] : new FilterChain();
-            $this->inputs[$name]->setFilterChain($this->filters[$name]);
+            $input->setFilterChain($this->filters[$name]);
             $this->validators[$name] = isset($this->validators[$name]) ? $this->validators[$name] : new ValidatorChain();
-            $this->inputs[$name]->setValidatorChain($this->validators[$name]);
+            $input->setValidatorChain($this->validators[$name]);
+            $this->add($input);
         }
         return $this;
     }
