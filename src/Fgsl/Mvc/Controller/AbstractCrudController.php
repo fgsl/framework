@@ -307,6 +307,6 @@ abstract class AbstractCrudController extends AbstractActionController
             'urlDelete' => $urlDelete,
             'urlHomepage' => $urlHomepage
         ]);            
-        return new $view;        
+        return $view;        
     }
 }
