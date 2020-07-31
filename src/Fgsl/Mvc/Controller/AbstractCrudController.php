@@ -31,6 +31,7 @@ use Laminas\Paginator\Adapter\DbSelect;
 use Laminas\Session\Container;
 use Laminas\Validator\AbstractValidator;
 use Laminas\View\Model\ViewModel;
+use Laminas\View\Model\JsonModel;
 
 abstract class AbstractCrudController extends AbstractActionController
 {
@@ -85,6 +86,11 @@ abstract class AbstractCrudController extends AbstractActionController
      * @var string
      */
     protected $pageArg = 'page';
+    
+    /**
+     * @var boolean
+     */
+    protected $jsonView = false;
 
     public function __construct($table, $parentTable = null, $sessionManager = null)
     {
@@ -100,40 +106,18 @@ abstract class AbstractCrudController extends AbstractActionController
      */
     public function indexAction()
     {
-        $controller = $this->getControllerName();
-
-        $urlEdit = $this->url()->fromRoute($this->route, [
-            'controller' => $controller,
-            'action' => 'edit'
-        ]);
-        $urlHomepage = $this->url()->fromRoute('home');
-        $urlDelete = $this->url()->fromRoute($this->route, [
-            'controller' => $controller,
-            'action' => 'delete'
-        ]);
-
-        $calledClass = get_called_class();
-        $tokens = explode('\\',str_replace('Controller','',$calledClass));
-        $controller = strtolower(end($tokens));
-        return new ViewModel([
-            'controller' => $controller,
-            'paginator' => $this->getPaginator(),
-            'route' => $this->route,
-            'urlEdit' => $urlEdit,
-            'urlDelete' => $urlDelete,
-            'urlHomepage' => $urlHomepage
-        ]);
+        return $this->getListView($this->getPaginator());
     }
 
     /**
      *
      * @return \Laminas\Paginator\Paginator
      */
-    protected function getPaginator()
+    protected function getPaginator($alternativeSelect = null)
     {
         $resultSet = new ResultSet();
         $resultSet->setArrayObjectPrototype($this->table->getModel(null));
-        $pageAdapter = new DbSelect($this->getSelect(), $this->table->getSql(),$resultSet);
+        $pageAdapter = new DbSelect(is_null($alternativeSelect) ? $this->getSelect() : $alternativeSelect, $this->table->getSql(),$resultSet);
         $paginator = new Paginator($pageAdapter);
         $paginator->setCurrentPageNumber($this->params()
             ->fromRoute($this->pageArg, 1));
@@ -162,10 +146,16 @@ abstract class AbstractCrudController extends AbstractActionController
         if ($saved) {
             $form->isValid();
         }
-        return [
+        if ($this->jsonView){
+            $view = new JsonModel();
+        } else {
+            $view = new ViewModel();
+        }
+        $view->setVariables([
             'form' => $form,
             'title' => $this->getEditTitle($key)
-        ];
+        ]);
+        return $view;
     }
 
     /**
@@ -285,5 +275,38 @@ abstract class AbstractCrudController extends AbstractActionController
     protected function getSelect()
     {
         return $this->table->getSelect();
+    }
+    
+    protected function getListView($paginator)
+    {
+        $controller = $this->getControllerName();
+        
+        $urlEdit = $this->url()->fromRoute($this->route, [
+            'controller' => $controller,
+            'action' => 'edit'
+        ]);
+        $urlHomepage = $this->url()->fromRoute('home');
+        $urlDelete = $this->url()->fromRoute($this->route, [
+            'controller' => $controller,
+            'action' => 'delete'
+        ]);
+        
+        $calledClass = get_called_class();
+        $tokens = explode('\\',str_replace('Controller','',$calledClass));
+        $controller = strtolower(end($tokens));
+        if ($this->jsonView){
+            $view = new JsonModel();
+        } else {
+            $view = new ViewModel();
+        }
+        $view->setVariables([
+            'controller' => $controller,
+            'paginator' => $paginator,
+            'route' => $this->route,
+            'urlEdit' => $urlEdit,
+            'urlDelete' => $urlDelete,
+            'urlHomepage' => $urlHomepage
+        ]);            
+        return new $view;        
     }
 }
