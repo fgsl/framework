@@ -133,7 +133,7 @@ abstract class AbstractCrudController extends AbstractActionController
     {
         $resultSet = new ResultSet();
         $resultSet->setArrayObjectPrototype($this->table->getModel(null));
-        $pageAdapter = new DbSelect($this->table->getSelect(), $this->table->getSql(),$resultSet);
+        $pageAdapter = new DbSelect($this->getSelect(), $this->table->getSql(),$resultSet);
         $paginator = new Paginator($pageAdapter);
         $paginator->setCurrentPageNumber($this->params()
             ->fromRoute($this->pageArg, 1));
@@ -277,5 +277,13 @@ abstract class AbstractCrudController extends AbstractActionController
     protected function getPost()
     {
         return $this->getRequest()->getPost();
+    }
+    
+    /**
+     * return Select
+     */
+    protected function getSelect()
+    {
+        return $this->table->getSelect();
     }
 }
