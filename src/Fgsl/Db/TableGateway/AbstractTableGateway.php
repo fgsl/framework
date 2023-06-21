@@ -38,7 +38,7 @@ abstract class AbstractTableGateway
         $this->tableGateway = $tableGateway;
     }
 
-    public function getModels(string $where = null): ResultSetInterface
+    public function getModels($where = null): ResultSetInterface
     {
         $resultSet = $this->tableGateway->select($where);
         return $resultSet;
@@ -109,4 +109,31 @@ abstract class AbstractTableGateway
     {
         return $this->tableGateway->getTable();
     }
+
+    public function getByField(string $field, $value): AbstractActiveRecord
+    {
+        $where = [
+            $field => $value
+        ];
+        $rowSet = $this->getModels($where);
+        if ($rowSet->count() == 0) {
+            $modelName = $this->modelName;
+            return new $modelName();
+        }
+        return $rowSet->current();
+    }
+    
+    public function getByFields(array $fields): AbstractActiveRecord
+    {
+        $where = [];
+        foreach($fields as $field => $value){
+            $where[$field] = $value;
+        }
+        $rowSet = $this->getModels($where);
+        if ($rowSet->count() == 0) {
+            $modelName = $this->modelName;
+            return new $modelName();
+        }
+        return $rowSet->current();
+    }    
 }
