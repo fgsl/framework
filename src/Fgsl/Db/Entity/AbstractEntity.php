@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
@@ -22,31 +23,19 @@ use Laminas\InputFilter\InputFilterInterface;
 
 abstract class AbstractEntity
 {
-    /**
-     *
-     * @var InputFilterInterface
-     */
-    protected $inputFilter;
+    protected ?InputFilterInterface $inputFilter = null;
 
-    /**
-     * @return InputFilterInterface
-     */
-    abstract public function getInputFilter();
+    abstract public function getInputFilter(): InputFilterInterface;
 
-    /**
-     * @param array $array
-     */
-    public function exchangeArray($array)
+    public function exchangeArray(array $array) 
     {
         foreach ($array as $attribute => $value) {
             $this->$attribute = $value;
         }
     }
 
-    /**
-     * @return array
-     */
-    abstract public function getArrayCopy();
+    abstract public function getArrayCopy(): array;
+    
     /**
      * @return mixed
      */

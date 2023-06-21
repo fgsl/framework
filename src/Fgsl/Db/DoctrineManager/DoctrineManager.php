@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
@@ -24,36 +25,24 @@ use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\DBAL\DriverManager;
 use Fgsl\ServiceManager\ServiceManager;
 
 final class DoctrineManager
 {
-    /**
-     *
-     * @var EntityManager
-     */
-    private static $entityManager = null;
+    private static ?EntityManager $entityManager = null;
 
-    /**
-     * @return EntityManager
-     */
-    public static function getEntityManager()
+    public static function getEntityManager(): ?EntityManager
     {
         return self::$entityManager;
     }
 
-    /**
-     *
-     * @param string $doctrinePath
-     * @param string $modulePath
-     * @param string $moduleName
-     */
-    public static function initialize($doctrinePath, $modulePath, $moduleName)
+    public static function initialize(string $doctrinePath, string $modulePath, string $moduleName)
     {
         $conn = self::getDoctrineConfig();
         $config = new Configuration();
         $cache = new ArrayCache();
-        $config->setMetadataCacheImpl($cache);
+        $config->setMetadataCache($cache);
         $annotationPath	= $doctrinePath . '/ORM/Mapping/Driver/DoctrineAnnotations.php';
         AnnotationRegistry::registerFile($annotationPath);
         $driver = new AnnotationDriver(
@@ -63,7 +52,7 @@ final class DoctrineManager
         $config->setMetadataDriverImpl($driver);
         $config->setProxyDir("$modulePath/src/$moduleName/Proxy");
         $config->setProxyNamespace("$moduleName\\Proxy");
-        self::$entityManager = EntityManager::create($conn, $config);
+        self::$entityManager = DriverManager::getConnection($conn, $config);
     }
 
     /**

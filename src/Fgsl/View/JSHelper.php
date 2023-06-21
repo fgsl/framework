@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
@@ -16,7 +17,6 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-declare(strict_types = 1);
 namespace Fgsl\View;
 
 use Laminas\View\Helper\HeadScript;
@@ -27,13 +27,7 @@ class JSHelper
     /** @var string */
     public static $script;
     
-    /**
-     * @param RendererInterface $view
-     * @param string $path
-     * @param array $paths
-     * @param boolean $constants
-     */
-    public static function loadJS(RendererInterface $view, string $path = null, array $paths = null,$constants = true, $type = 'text/javascript')
+    public static function loadJS(RendererInterface $view, string $path = null, array $paths = null, bool $constants = true, string $type = 'text/javascript')
     {
         if ($constants){
             $view->headScript(HeadScript::SCRIPT)->appendScript(self::$script, $type);
@@ -49,38 +43,22 @@ class JSHelper
         }
     }
     
-    /**
-     * @param RendererInterface $view
-     * @param string $path
-     */
-    public static function appendJS(RendererInterface $view, string $path, $type = 'text/javascript')
+    public static function appendJS(RendererInterface $view, string $path, string $type = 'text/javascript')
     {
         $view->headScript(HeadScript::FILE)->appendFile($path, $type);
     }
     
-    /**
-     * @param RendererInterface $view
-     * @param string $path
-     */
-    public static function prependJS(RendererInterface $view, string $path, $type = 'text/javascript')
+    public static function prependJS(RendererInterface $view, string $path, string $type = 'text/javascript')
     {
         $view->headScript(HeadScript::FILE)->prependFile($path, $type);
     }
     
-    /**
-     * @param RendererInterface $view
-     * @param string $script
-     */
-    public static function appendScript(RendererInterface $view, string $script, $type = 'text/javascript')
+    public static function appendScript(RendererInterface $view, string $script, string $type = 'text/javascript')
     {
         $view->headScript(HeadScript::SCRIPT)->appendScript($script, $type);
     }
     
-    /**
-     * @param RendererInterface $view
-     * @param string $script
-     */
-    public static function prependScript(RendererInterface $view, string $script, $type = 'text/javascript')
+    public static function prependScript(RendererInterface $view, string $script, string $type = 'text/javascript')
     {
         $view->headScript(HeadScript::SCRIPT)->prependScript($script, $type);
     }

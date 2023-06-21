@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
@@ -18,7 +19,7 @@
  */
 namespace Fgsl\Db\TableGateway;
 
-use Fgsl\Model\AbstractModel;
+use Fgsl\Model\AbstractActiveRecord;
 use Laminas\Db\ResultSet\ResultSetInterface;
 use Laminas\Db\Sql\Select;
 use Laminas\Db\Sql\Sql;
@@ -26,39 +27,18 @@ use Laminas\Db\TableGateway\TableGatewayInterface;
 
 abstract class AbstractTableGateway
 {
-    /**
-     *
-     * @var string
-     */
-    protected $keyName;
+    protected string $keyName;
 
-    /**
-     *
-     * @var string
-     */
-    protected $modelName;
+    protected string $modelName;
 
-    /**
-     *
-     * @var TableGatewayInterface
-     */
-    protected $tableGateway;
+    protected TableGatewayInterface $tableGateway;
 
-    /**
-     *
-     * @param TableGatewayInterface $tableGateway
-     */
     public function __construct(TableGatewayInterface $tableGateway)
     {
         $this->tableGateway = $tableGateway;
     }
 
-    /**
-     *
-     * @param string $where
-     * @return ResultSetInterface
-     */
-    public function getModels($where = null)
+    public function getModels(string $where = null): ResultSetInterface
     {
         $resultSet = $this->tableGateway->select($where);
         return $resultSet;
@@ -67,9 +47,8 @@ abstract class AbstractTableGateway
     /**
      *
      * @param mixed $key
-     * @return AbstractModel
      */
-    public function getModel($key)
+    public function getModel($key): AbstractActiveRecord
     {
         $models = $this->getModels([
             $this->keyName => $key
@@ -84,11 +63,7 @@ abstract class AbstractTableGateway
         return $models->current();
     }
 
-    /**
-     *
-     * @param AbstractModel $model
-     */
-    public function save(AbstractModel $model)
+    public function save(AbstractActiveRecord $model)
     {
         $primaryKey = $this->keyName;
         $key = $model->$primaryKey;
@@ -114,39 +89,24 @@ abstract class AbstractTableGateway
         ));
     }
 
-    /**
-     * @return Sql
-     */
-    public function getSql()
+    public function getSql(): Sql
     {
         return $this->tableGateway->getSql();
     }
 
-    /**
-     *
-     * @return \Laminas\Db\Sql\Select
-     */
-    public function getSelect()
+    public function getSelect(): Select
     {
         $select = new Select($this->tableGateway->getTable());
         return $select;
     }
 
-    /**
-     *
-     * @return string
-     */
-    public function getKeyName()
+    public function getKeyName(): string
     {
         return $this->keyName;
     }
 
-    /**
-     * @return string
-     */
-    public function getTable()
+    public function getTable(): string
     {
         return $this->tableGateway->getTable();
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
@@ -27,31 +28,13 @@ use Laminas\Validator\ValidatorInterface;
 
 class InputFilter extends LaminasInputFilter
 {
-    /**
-     *
-     * @var array
-     */
     protected $inputs = array();
 
-    /**
-     *
-     * @var array
-     */
     protected $filters = array();
 
-    /**
-     *
-     * @var array
-     */
     protected $validators = array();
 
-    /**
-     *
-     * @param string $name
-     * @param boolean $required (optional)
-     * @return InputFilter
-     */
-    public function addInput($name, $required = true)
+    public function addInput(string $name, $required = true): InputFilter
     {
         $input = new Input($name);
         $input->setRequired($required);
@@ -59,36 +42,21 @@ class InputFilter extends LaminasInputFilter
         return $this;
     }
 
-    /**
-     *
-     * @param string $name
-     * @param FilterInterface $filter
-     * @return InputFilter
-     */
-    public function addFilter($name, FilterInterface $filter)
+    public function addFilter(string $name, FilterInterface $filter): InputFilter
     {
         $this->filters[$name] = isset($this->filters[$name]) ? $this->filters[$name] : new FilterChain();
         $this->filters[$name]->attach($filter);
         return $this;
     }
 
-    /**
-     *
-     * @param string $name
-     * @param ValidatorInterface $validator
-     * @return InputFilter
-     */
-    public function addValidator($name, ValidatorInterface $validator)
+    public function addValidator(string $name, ValidatorInterface $validator): InputFilter
     {
         $this->validators[$name] = isset($this->validators[$name]) ? $this->validators[$name] : new ValidatorChain();
         $this->validators[$name]->addValidator($validator);
         return $this;
     }
 
-    /**
-     * @return InputFilter
-     */
-    public function addChains()
+    public function addChains(): InputFilter
     {
         foreach ($this->inputs as $name => $input) {            
             $this->filters[$name] = isset($this->filters[$name]) ? $this->filters[$name] : new FilterChain();
