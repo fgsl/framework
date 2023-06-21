@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
 class ModelTest extends TestCase
 {
     /**
-     * @covers Fgsl\Model\ActiveRecord
+     * @covers Fgsl\Model\AbstractActiveRecord
      */
     public function testActiveRecordModel() 
     {
@@ -41,4 +41,20 @@ class ModelTest extends TestCase
         $this->assertIsInt($person->getArrayCopy()['code']);
         $this->assertCount(2, $person->getArrayCopy());
     }
+
+    /**
+     * @covers Fgsl\Model\AbstractModel
+     */
+    public function testAbstractModel() 
+    {
+        $person = new OtherPerson();
+        $person->exchangeArray([
+            'code' => 42,
+            'name' => 'Answer'       
+        ]);
+        
+        $this->assertIsArray($person->getArrayCopy());        
+        $this->assertIsInt($person->code);
+        $this->assertCount(2, $person->getArrayCopy());
+    }    
 }
