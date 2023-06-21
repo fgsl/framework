@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
@@ -24,23 +25,11 @@ use Doctrine\ORM\EntityManager;
 
 class DoctrineTable extends AbstractAdapter
 {
-    /**
-     *
-     * @var EntityManager
-     */
-    protected $entityManager;
+    protected EntityManager$entityManager;
 
-    /**
-     *
-     * @var string
-     */
-    protected $entityName;
+    protected string $entityName;
 
-    /**
-     *
-     * @var string
-     */
-    protected $identityColumn;
+    protected string $identityColumn;
 
     /**
      *

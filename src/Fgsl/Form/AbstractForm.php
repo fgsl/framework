@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
@@ -74,15 +75,7 @@ abstract class AbstractForm extends Form
      */
     const TEXTAREA = 'textarea';    
     
-    /**
-     *
-     * @param string $name
-     * @param string $type
-     * @param string $label
-     * @param array $attributes
-     * @param array $options
-     */
-    protected function addElement($name, $type, $label = null, $attributes = array(), $options = array())
+    protected function addElement(string $name, string $type, string $label = null, array $attributes = array(), array $options = array())
     {
         if ($type == self::SELECT) {
             $element = new Select($name);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
@@ -21,22 +22,13 @@ namespace Fgsl\ServiceManager;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 class ServiceManager
 {
-    /**
-     * @var ServiceLocatorInterface
-     */
-    private static $instance = null;
+    private static ?ServiceLocatorInterface $instance = null;
 
-    /**
-     * @return \Laminas\ServiceManager\ServiceLocatorInterface
-     */
-    public static function getInstance()
+    public static function getInstance(): ServiceLocatorInterface
     {
         return self::$instance;
     }
 
-    /**
-     * @param ServiceLocatorInterface $instance
-     */
     public static function setInstance(ServiceLocatorInterface $instance)
     {
         self::$instance = $instance;
