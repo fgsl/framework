@@ -3,7 +3,7 @@ declare(strict_types=1);
 /**
  *  FGSL Framework
  *  @author Flávio Gomes da Silva Lisboa <flavio.lisboa@fgsl.eti.br>
- *  @copyright FGSL 2020
+ *  @copyright FGSL 2023
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
@@ -19,13 +19,13 @@ declare(strict_types=1);
  */
 namespace Fgsl\Db\TableGateway;
 
-use Fgsl\Model\AbstractActiveRecord;
+use Fgsl\Model\AbstractModel;
 use Laminas\Db\ResultSet\ResultSetInterface;
 use Laminas\Db\Sql\Select;
 use Laminas\Db\Sql\Sql;
 use Laminas\Db\TableGateway\TableGatewayInterface;
 
-abstract class AbstractTableGateway
+abstract class AbstractTableModelGateway
 {
     protected string $keyName;
 
@@ -48,17 +48,14 @@ abstract class AbstractTableGateway
      *
      * @param mixed $key
      */
-    public function getModel($key): AbstractActiveRecord
+    public function getModel($key): AbstractModel
     {
         $models = $this->getModels([
             $this->keyName => $key
         ]);
         if ($models->count() == 0 || $models->current() == null ){
             $model = $this->modelName;
-            return new $model(
-                $this->keyName,
-                $this->tableGateway->getTable(),
-                $this->tableGateway->getAdapter());
+            return new $model();
         }
         return $models->current();
     }
@@ -66,7 +63,7 @@ abstract class AbstractTableGateway
     /**
      * @return int
      */
-    public function save(AbstractActiveRecord $model)
+    public function save(AbstractModel $model)
     {
         $primaryKey = $this->keyName;
         $key = $model->$primaryKey;
@@ -114,7 +111,7 @@ abstract class AbstractTableGateway
         return $this->tableGateway->getTable();
     }
 
-    public function getByField(string $field, $value): AbstractActiveRecord
+    public function getByField(string $field, $value): AbstractModel
     {
         $where = [
             $field => $value
@@ -127,7 +124,7 @@ abstract class AbstractTableGateway
         return $rowSet->current();
     }
     
-    public function getByFields(array $fields): AbstractActiveRecord
+    public function getByFields(array $fields): AbstractModel
     {
         $where = [];
         foreach($fields as $field => $value){
