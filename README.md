@@ -18,8 +18,9 @@ This class is an database adapter that uses a Doctrine EntityManager to establis
 These two components allows to integrante Doctrine as ORM manager of application
 
 * `Fgsl\TableGateway\AbstractTableGateway`
+* `Fgsl\TableGateway\AbstractTableModelGateway`
 
-This component is an improvement for Laminas default TableGateway.
+These component is an improvement for Laminas default TableGateway. The first works with ActiveRecord pattern.
 
 ## Form
 
