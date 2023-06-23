@@ -122,7 +122,11 @@ abstract class AbstractTableGateway
         $rowSet = $this->getModels($where);
         if ($rowSet->count() == 0) {
             $modelName = $this->modelName;
-            return new $modelName();
+            return new $modelName(
+                $this->keyName,
+                $this->tableGateway->getTable(),
+                $this->tableGateway->getAdapter()
+            );
         }
         return $rowSet->current();
     }
@@ -136,7 +140,11 @@ abstract class AbstractTableGateway
         $rowSet = $this->getModels($where);
         if ($rowSet->count() == 0) {
             $modelName = $this->modelName;
-            return new $modelName();
+            return new $modelName(
+                $this->keyName,
+                $this->tableGateway->getTable(),
+                $this->tableGateway->getAdapter()                
+            );
         }
         return $rowSet->current();
     }    
