@@ -38,9 +38,17 @@ abstract class AbstractTableModelGateway
         $this->tableGateway = $tableGateway;
     }
 
-    public function getModels($where = null): ResultSetInterface
+    public function getModels($where = null, $order = null): ResultSetInterface
     {
-        $resultSet = $this->tableGateway->select($where);
+        if (is_null($order)){
+            $resultSet = $this->tableGateway->select($where);
+        } else {
+            $select = $this->getSelect();
+            $select->order($order);
+            if (!is_null($where)) $select->where($where);
+            $resultSet = $this->tableGateway->selectWith($select);
+        }
+        
         return $resultSet;
     }
 
