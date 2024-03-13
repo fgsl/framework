@@ -71,12 +71,15 @@ abstract class AbstractTableModelGateway
     /**
      * @return int
      */
-    public function save(AbstractModel $model)
+    public function save(AbstractModel $model, $excludePrimaryKey = false)
     {
         $primaryKey = $this->keyName;
         $key = $model->$primaryKey;
         $set = $model->getArrayCopy();
         $existingModel = $this->getModel($key);
+        if ($excludePrimaryKey){
+            unset($set[$primaryKey]);
+        }
         if (!isset($existingModel->$primaryKey)) {
             return $this->tableGateway->insert($set);
         } else {
