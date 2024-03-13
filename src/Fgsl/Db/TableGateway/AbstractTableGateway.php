@@ -81,7 +81,7 @@ abstract class AbstractTableGateway
         $set = $model->getArrayCopy();
         $existingModel = $this->getModel($key);
         if ($excludePrimaryKey){
-            unset($set[$model->$primaryKey]);
+            unset($set[$primaryKey]);
         }
         if (!isset($existingModel->$primaryKey)) {
             return $this->tableGateway->insert($set);
