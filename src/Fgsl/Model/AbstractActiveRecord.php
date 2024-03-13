@@ -41,7 +41,7 @@ abstract class AbstractActiveRecord extends RowGateway
      * @return array
      */
     public function getArrayCopy()
-    {        
+    {
         return $this->data;
     }
 
