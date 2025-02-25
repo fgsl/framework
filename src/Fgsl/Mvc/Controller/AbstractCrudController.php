@@ -45,7 +45,7 @@ abstract class AbstractCrudController extends AbstractActionController
 
     protected AbstractTableGateway $table;
 
-    protected AbstractTableGateway $parentTable;
+    protected ?AbstractTableGateway $parentTable = null;
 
     protected string $tableClass;
 
