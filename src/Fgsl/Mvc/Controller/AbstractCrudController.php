@@ -193,7 +193,7 @@ abstract class AbstractCrudController extends AbstractActionController
         AbstractValidator::setDefaultTranslator($mvcTranslator);
     }
 
-    protected function getObject($namespace): AbstracActiveRecord
+    protected function getObject($namespace): AbstractActiveRecord
     {
         return new $namespace(
             $this->table->getKeyName(),
