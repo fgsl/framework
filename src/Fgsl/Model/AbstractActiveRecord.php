@@ -24,16 +24,8 @@ use Laminas\InputFilter\InputFilterInterface;
 
 abstract class AbstractActiveRecord extends RowGateway
 {
-    /**
-     *
-     * @var InputFilterInterface
-     */
-    protected InputFilterInterface $inputFilter;
+    protected ?InputFilterInterface $inputFilter = null;
 
-    /**
-     *
-     * @return \Laminas\InputFilter\InputFilterInterface
-     */
     abstract public function getInputFilter(): InputFilterInterface;
 
     /**
