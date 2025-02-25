@@ -209,7 +209,7 @@ abstract class AbstractCrudController extends AbstractActionController
         return lcfirst($controller);
     }
     
-    protected function getPost(): array
+    protected function getPost(): \ArrayObject
     {
         return $this->getRequest()->getPost();
     }
