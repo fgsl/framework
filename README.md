@@ -1,5 +1,7 @@
 # Fgsl framework
 
+> This package is abandoned and no longer maintained. The author suggests using the [fgsl/mvc](https://github.com/fgsl/) package instead. 
+
 Extensions of Laminas
 
 These components make easy to build web application using Laminas framework.
